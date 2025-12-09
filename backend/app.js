@@ -11,7 +11,15 @@ import cors from "cors";
 
 const app = express();
 
-app.use(cors()); // Enable CORS for all routes
+const allowed = [process.env.FRONTEND_URL || 'http://localhost:3000'];
+app.use(cors({
+  origin: function(origin, cb){
+    if(!origin) return cb(null, true);
+    if(allowed.indexOf(origin) !== -1) return cb(null, true);
+    return cb(new Error('Not allowed by CORS'));
+  }
+}));
+
 app.use(morgan("dev"));
 app.use(express.json());
 
@@ -21,10 +29,7 @@ app.use("/api/orders", orderRoutes);
 app.use("/api/payment", paymentRoutes);
 app.use("/api/users", userRoutes);
 
-app.get("/", (req, res) => {
-  res.json({ success: true, message: "API is running..." });
-});
-
+app.get('/health', (req, res) => res.json({ ok: true }));
 
 app.use(errorHandler); // Error handler middleware
 
