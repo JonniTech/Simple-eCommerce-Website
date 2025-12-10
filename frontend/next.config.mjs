@@ -2,7 +2,11 @@
 const nextConfig = {
   /* config options here */
   // add access to unsplash.com
-  
+
+  images: {
+    domains: ["unsplash.com"],
+  },
+
 };
 
 export default nextConfig;
