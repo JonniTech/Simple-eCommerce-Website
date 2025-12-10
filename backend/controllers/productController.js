@@ -12,7 +12,16 @@ export const getProducts = asyncHandler(async (req, res) => {
 // @desc   Get single product by id
 // @route  GET /api/products/:id
 // @access Public
+import { isValidObjectId } from "mongoose";
+
+// ... (existing imports)
+
 export const getProductById = asyncHandler(async (req, res) => {
+  if (!isValidObjectId(req.params.id)) {
+    res.status(404);
+    throw new Error("Product not found (Invalid ID)");
+  }
+
   const product = await Product.findById(req.params.id);
 
   if (product) {

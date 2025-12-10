@@ -11,7 +11,7 @@ import hashPassword from "../auth/hashPassword.js";
 export const registerUser = asyncHandler(async (req, res) => {
   const { name, email, password } = req.body;
 
-  if(!name || !email || !password){
+  if (!name || !email || !password) {
     res.status(400);
     throw new Error("Please provide name, email and password");
   }
@@ -36,6 +36,7 @@ export const registerUser = asyncHandler(async (req, res) => {
         id: user._id,
         name: user.name,
         email: user.email,
+        isAdmin: user.isAdmin,
         token: generateToken(user._id),
       },
     });
@@ -52,7 +53,7 @@ export const registerUser = asyncHandler(async (req, res) => {
 export const loginUser = asyncHandler(async (req, res) => {
   const { email, password } = req.body;
 
-  if(!email || !password){
+  if (!email || !password) {
     res.status(400);
     throw new Error("Please provide email and password");
   }
@@ -78,11 +79,11 @@ export const loginUser = asyncHandler(async (req, res) => {
       id: user._id,
       name: user.name,
       email: user.email,
+      isAdmin: user.isAdmin,
       token: generateToken(user._id),
     },
   });
 });
-
 
 // @desc   Get current user
 // @route  GET /api/auth/me

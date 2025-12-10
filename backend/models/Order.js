@@ -19,12 +19,21 @@ const orderSchema = new mongoose.Schema(
             },
         ],
         totalPrice: { type: Number, required: true },
+        isPaid: {
+            type: Boolean,
+            default: false,
+        },
         paymentStatus: {
             type: String,
             enum: ["Pending", "Paid"],
             default: "Pending",
         },
         paidAt: { type: Date },
+        isDelivered: {
+            type: Boolean,
+            default: false,
+        },
+        deliveredAt: { type: Date },
     },
     { timestamps: true }
 );
