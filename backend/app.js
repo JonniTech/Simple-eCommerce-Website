@@ -31,7 +31,7 @@ app.use("/api/orders", orderRoutes);
 app.use("/api/payment", paymentRoutes);
 app.use("/api/users", userRoutes);
 
-app.get('/health', (req, res) => res.json({ ok: true }));
+app.get('/', (req, res) => res.json({ ok: true }));
 
 app.use(errorHandler); // Error handler middleware
 
