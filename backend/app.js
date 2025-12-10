@@ -13,7 +13,7 @@ import cors from "cors";
 
 const app = express();
 
-const allowed = [process.env.FRONTEND_URL || 'http://localhost:3000' || "https://simple-e-commerce-website-nu.vercel.app"];
+const allowed = [process.env.FRONTEND_URL || "https://simple-e-commerce-website-nu.vercel.app" || "http://localhost:3000"];
 app.use(cors({
   origin: function(origin, cb){
     if(!origin) return cb(null, true);
