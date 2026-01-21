@@ -1,171 +1,233 @@
+# GhostShop - Premium E-Commerce Platform
 
-<div align="center">
+![GhostShop UI](assets/Home-page-ui.png)
 
-# 👻 GhostShop
-### Premium Tech E-Commerce Experience
+## Overview
 
-[![Next.js](https://img.shields.io/badge/Next.js-16.0-black?style=for-the-badge&logo=next.js&logoColor=white)](https://nextjs.org/)
-[![React](https://img.shields.io/badge/React-19.0-20232a?style=for-the-badge&logo=react&logoColor=61DAFB)](https://reactjs.org/)
-[![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-4.0-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white)](https://tailwindcss.com/)
-[![Node.js](https://img.shields.io/badge/Node.js-20.0-43853D?style=for-the-badge&logo=node.js&logoColor=white)](https://nodejs.org/)
-[![Express.js](https://img.shields.io/badge/Express.js-5.0-404d59?style=for-the-badge&logo=express&logoColor=61DAFB)](https://expressjs.com/)
-[![MongoDB](https://img.shields.io/badge/MongoDB-9.0-4EA94B?style=for-the-badge&logo=mongodb&logoColor=white)](https://www.mongodb.com/)
-[![Stripe](https://img.shields.io/badge/Stripe-Payment-008CDD?style=for-the-badge&logo=stripe&logoColor=white)](https://stripe.com/)
+GhostShop is a modern, full-stack e-commerce solution built to deliver a seamless shopping experience. It combines a high-performance Next.js frontend with a robust Node.js/Express backend, featuring secure payments via Stripe, comprehensive admin management, and a polished, responsive user interface. This project demonstrates a production-ready architecture suited for scalable digital commerce.
 
-<br />
+## Table of Contents
 
-<p align="center">
-  <img src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExbmZ0cHR3M3Z5Z3Z5Z3Z5Z3Z5Z3Z5Z3Z5Z3Z5Z3Z5Z3Z5/xT9IgzoKnwFNmISR8I/giphy.gif" width="50" height="50" alt="typing..." />
-  <br/>
-  <b>Build. Deploy. Scale.</b>
-</p>
+- [Key Features](#key-features)
+- [Technology Stack](#technology-stack)
+- [System Architecture](#system-architecture)
+- [Application Flow](#application-flow)
+- [Project Structure](#project-structure)
+- [API Documentation](#api-documentation)
+- [Frontend Routes](#frontend-routes)
+- [Installation & Setup](#installation--setup)
 
-</div>
+## Key Features
 
----
+- **Modern User Interface**: Built with Next.js 16 and Tailwind CSS 4 for a responsive, dark-mode enabled design.
+- **Secure Authentication**: JWT-based authentication for users and administrators.
+- **Product Management**: Full CRUD capabilities for products with image support.
+- **Shopping Cart**: Real-time state management for a seamless cart experience.
+- **Payment Integration**: Secure checkout process integrated with Stripe Payment Intents.
+- **Admin Dashboard**: Analytical dashboard for managing products, orders, and users.
+- **Order Tracking**: Comprehensive order history and status tracking.
+- **Performance**: Optimized with server-side rendering and static generation where applicable.
 
-## 🚀 Overview
+## Technology Stack
 
-**GhostShop** is a modern, full-stack e-commerce application designed for performance and scalability. Built with the cutting-edge **MERN stack** (MongoDB, Express, React 19, Node.js) and powered by **Next.js 16**, it offers a seamless shopping experience with server-side rendering, robust state management, and secure payment processing.
+### Frontend
 
-From a responsive, dark-mode-enabled frontend to a powerful admin dashboard, every component is crafted for production readiness.
+![Next JS](https://img.shields.io/badge/Next-black?style=for-the-badge&logo=next.js&logoColor=white)
+![React](https://img.shields.io/badge/React-20232a?style=for-the-badge&logo=react&logoColor=61DAFB)
+![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white)
+![Stripe](https://img.shields.io/badge/Stripe-626CD9?style=for-the-badge&logo=Stripe&logoColor=white)
 
-## ✨ Key Features
+### Backend
 
-### 🛒 Frontend Architecture
-*   **Next.js 16 (App Router)**: Utilizing Server Components for lightning-fast initial page loads and SEO.
-*   **Dynamic UI/UX**: Implemented with **Tailwind CSS 4** for responsive, mobile-first design.
-    *   Dark/Light Mode toggle.
-    *   Smooth transitions and micro-interactions.
-    *   Pulse animations for loading states.
-*   **State Management**: Complex cart logic and user authentication state handled via React Context API.
-*   **Payment Integration**: Secure, PCI-compliant checkout flows using **Stripe**.
+![NodeJS](https://img.shields.io/badge/node.js-6DA55F?style=for-the-badge&logo=node.js&logoColor=white)
+![Express.js](https://img.shields.io/badge/express.js-%23404d59.svg?style=for-the-badge&logo=express&logoColor=%2361DAFB)
+![MongoDB](https://img.shields.io/badge/MongoDB-%234ea94b.svg?style=for-the-badge&logo=mongodb&logoColor=white)
+![JWT](https://img.shields.io/badge/JWT-black?style=for-the-badge&logo=JSON%20web%20tokens)
 
-### 🛠️ Backend Systems
-*   **Express 5 API**: High-performance RESTful API structure.
-*   **Secure Authentication**: JWT-based stateless authentication with strict password hashing (bcryptjs).
-*   **Database**: **MongoDB** with Mongoose 9 for strict schema validation and scalable data storage.
-*   **Admin Middleware**: Role-based access control protecting sensitive management routes.
-*   **Security First**: Implemented Helmet for header security and Morgan for detailed logging.
+## System Architecture
 
-### ⚙️ Admin Dashboard
-*   **Product Management**: Full CRUD capabilities for store inventory.
-*   **User Oversight**: capabilities to manage registered users.
-*   **Robust image handling**: Defers to `SafeImage` components to gracefully handle missing or malformed data.
-
----
-
-## 🔄 System Flow
+The application follows a decoupled client-server architecture. The frontend consumes a RESTful API provided by the backend, which communicates with a MongoDB cluster.
 
 ```mermaid
 graph TD
-    User[Client User] -->|Browses| Front[Next.js Frontend]
-    Front -->|Auth Request| API[Express Backend]
-    API -->|Validate| DB[(MongoDB)]
-    
-    User -->|Checkout| Stripe[Stripe Gateway]
-    Front -->|Cart State| Context[React Context]
-    
-    Admin[Admin User] -->|Manage| AdminPanel[Admin Dashboard]
-    AdminPanel -->|CRUD| API
+    Client[Next.js Client] <-->|HTTP/JSON| API[Express API Gateway]
+    API <-->|Mongoose| DB[(MongoDB)]
+    API <-->|SDK| Stripe[Stripe Payment Gateway]
+    Client <-->|JS Library| Stripe
+
+    subgraph "Backend Services"
+        API
+        Auth[Auth Service]
+        Product[Product Service]
+        Order[Order Service]
+    end
+
+    API -.-> Auth
+    API -.-> Product
+    API -.-> Order
 ```
 
----
+## Application Flow
 
-## 🛠️ Installation & Setup
+The following diagram illustrates the typical user journey from browsing to checkout.
 
-Follow these steps to get the project running locally.
+```mermaid
+sequenceDiagram
+    participant User
+    participant Client
+    participant API
+    participant DB
+    participant Stripe
+
+    User->>Client: Browses Products
+    Client->>API: GET /api/products
+    API->>DB: Query Products
+    DB-->>API: Return Data
+    API-->>Client: Product List
+
+    User->>Client: Add to Cart & Checkout
+    Client->>API: POST /api/payment/create-intent
+    API->>Stripe: Create PaymentIntent
+    Stripe-->>API: Client Secret
+    API-->>Client: Return Secret
+
+    User->>Client: Enters Card Details
+    Client->>Stripe: Confirm Payment
+    Stripe-->>Client: Success Signal
+
+    Client->>API: POST /api/orders
+    API->>DB: Save Order
+    DB-->>API: Confirmation
+    API-->>Client: Order Success
+```
+
+## Project Structure
+
+### Backend (`/backend`)
+
+```
+backend/
+├── auth/           # Authentication utilities
+├── configs/        # Database and system configurations
+├── controllers/    # Request logic (Products, Orders, Auth)
+├── middlewares/    # Custom middlewares (Auth, Error handling)
+├── models/         # Mongoose Schemas
+├── routes/         # API Route definitions
+├── app.js          # Express app setup
+└── server.js       # Entry point
+```
+
+### Frontend (`/frontend`)
+
+```
+frontend/
+├── app/            # Next.js App Router pages
+│   ├── admin/      # Dashboard routes
+│   ├── cart/       # Shopping cart page
+│   ├── checkout/   # Payment page
+│   └── product/    # Product details
+├── components/     # Reusable UI components
+├── context/        # React Context (Auth, Cart)
+└── lib/            # Utility functions
+```
+
+## API Documentation
+
+### Authentication
+
+- `POST /api/auth/register` - Register a new user
+- `POST /api/auth/login` - Authenticate user and return token
+
+### Products
+
+- `GET /api/products` - List all products
+- `GET /api/products/:id` - Get single product details
+- `POST /api/products` - Create product (Admin only)
+- `PUT /api/products/:id` - Update product (Admin only)
+- `DELETE /api/products/:id` - Delete product (Admin only)
+
+### Orders
+
+- `POST /api/orders` - Create a new order
+- `GET /api/orders` - List user orders
+- `GET /api/orders/all` - List all orders (Admin only)
+
+## Frontend Routes
+
+- `/` - Landing Page
+- `/product/[id]` - Product Details
+- `/cart` - Shopping Cart
+- `/checkout` - Secure Checkout
+- `/login` / `/register` - User Authentication
+- `/admin` - Admin Dashboard
+- `/admin/products` - Product Management
+- `/admin/orders` - Order Management
+- `/admin/users` - User Management
+
+## Installation & Setup
 
 ### Prerequisites
-*   Node.js (v18+ recommended)
-*   MongoDB Instance (Local or Atlas)
-*   Stripe Account (for API keys)
+
+- Node.js (v18+)
+- MongoDB Instance (Local or Atlas)
+- Stripe Account (for payment testing)
 
 ### 1. Clone the Repository
+
 ```bash
-git clone https://github.com/your-username/simple-ecommerce-website.git
-cd simple-ecommerce-website
+git clone https://github.com/JonniTech/Simple-eCommerce-Website.git
+cd Simple-eCommerce-Website
 ```
 
 ### 2. Backend Setup
+
 Navigate to the backend directory and install dependencies.
+
 ```bash
 cd backend
 npm install
 ```
 
-Create a `.env` file in the `backend` root:
+Create a `.env` file in the `backend` directory:
+
 ```env
-PORT=8000
+PORT=5000
 MONGO_URI=your_mongodb_connection_string
-JWT_SECRET=your_secure_jwt_secret
+JWT_SECRET=your_jwt_secret
 STRIPE_SECRET_KEY=your_stripe_secret_key
+FRONTEND_URL=http://localhost:3000
 ```
 
-Start the backend server:
+Start the server:
+
 ```bash
 npm run dev
 ```
 
 ### 3. Frontend Setup
-Open a new terminal and navigate to the frontend directory.
+
+Navigate to the frontend directory and install dependencies.
+
 ```bash
-cd frontend
+cd ../frontend
 npm install
 ```
 
-Create a `.env` file in the `frontend` root:
+Create a `.env.local` file in the `frontend` directory:
+
 ```env
+NEXT_PUBLIC_API_URL=http://localhost:5000/api
 NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY=your_stripe_publishable_key
-NEXT_PUBLIC_API_URL=http://localhost:8000/api
 ```
 
-Start the frontend development server:
+Start the application:
+
 ```bash
 npm run dev
 ```
 
-The application should now be live at `http://localhost:3000`! 🚀
+Access the application at `http://localhost:3000`.
 
 ---
 
-## 📚 API Documentation
-
-### Products
-| Method | Endpoint | Description | Access |
-| :--- | :--- | :--- | :--- |
-| `GET` | `/api/products` | Fetch all products | Public |
-| `GET` | `/api/products/:id` | Fetch single product | Public |
-| `POST` | `/api/products` | Create new product | **Admin** |
-| `PUT` | `/api/products/:id` | Update product | **Admin** |
-| `DELETE` | `/api/products/:id` | Delete product | **Admin** |
-
-### Users & Auth
-| Method | Endpoint | Description | Access |
-| :--- | :--- | :--- | :--- |
-| `POST` | `/api/users/login` | Authenticate user | Public |
-| `POST` | `/api/users/register` | Register new user | Public |
-| `GET` | `/api/users` | List all users | **Admin** |
-| `DELETE` | `/api/users/:id` | Delete user | **Admin** |
-
----
-
-## 🤝 Contributing
-Contributions are welcome! Please fork the repository and submit a pull request for any enhancements.
-
-1.  Fork the Project
-2.  Create your Feature Branch (`git checkout -b feature/AmazingFeature`)
-3.  Commit your Changes (`git commit -m 'Add some AmazingFeature'`)
-4.  Push to the Branch (`git push origin feature/AmazingFeature`)
-5.  Open a Pull Request
-
----
-
-## 📝 License
-
-Distributed under the MIT License. See `LICENSE` for more information.
-
-<div align="center">
-  <br />
-  <p>Made with ❤️ by <b>Jonni & the Team</b></p>
-</div>
+© GhostShop Project. All Rights Reserved.
