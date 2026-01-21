@@ -1,12 +1,21 @@
 "use client";
-import { FiShoppingCart } from "react-icons/fi";
+import { FiShoppingCart, FiCheck } from "react-icons/fi";
 import Link from "next/link";
 import SafeImage from "@/components/SafeImage";
+import { useState } from "react";
 
 export default function ProductCard({ product, onAddToCart }) {
+    const [isAdded, setIsAdded] = useState(false);
+
+    const handleAddToCart = () => {
+        onAddToCart(product);
+        setIsAdded(true);
+        setTimeout(() => setIsAdded(false), 2000);
+    };
+
     return (
         <div className="bg-white dark:bg-[#362F5C] rounded-2xl shadow-sm hover:shadow-xl transition-all duration-300 overflow-hidden group border border-transparent dark:border-white/5 h-full flex flex-col">
-            <div className="relative w-full h-64 bg-gray-100 dark:bg-black/20 overflow-hidden">
+            <div className="relative w-full h-48 md:h-64 bg-gray-100 dark:bg-black/20 overflow-hidden">
                 <Link href={`/product/${product._id}`}>
                     <SafeImage
                         src={product.image}
@@ -19,9 +28,9 @@ export default function ProductCard({ product, onAddToCart }) {
                 </Link>
             </div>
 
-            <div className="p-5 flex flex-col flex-1">
+            <div className="p-4 md:p-5 flex flex-col flex-1">
                 <Link href={`/product/${product._id}`} className="block mb-2">
-                    <h3 className="text-lg font-bold text-dark dark:text-white group-hover:text-primary transition-colors line-clamp-1">
+                    <h3 className="text-base md:text-lg font-bold text-dark dark:text-white group-hover:text-primary transition-colors line-clamp-1">
                         {product.name}
                     </h3>
                 </Link>
@@ -39,11 +48,16 @@ export default function ProductCard({ product, onAddToCart }) {
                     </div>
 
                     <button
-                        onClick={() => onAddToCart(product)}
-                        className="bg-gray-50 dark:bg-white/10 hover:bg-primary hover:text-white text-dark dark:text-white p-3 rounded-xl transition-all active:scale-95"
+                        onClick={handleAddToCart}
+                        disabled={isAdded}
+                        className={`p-3 rounded-xl transition-all active:scale-95 flex items-center justify-center ${
+                            isAdded 
+                            ? "bg-green-500 text-white" 
+                            : "bg-gray-50 dark:bg-white/10 hover:bg-primary hover:text-white text-dark dark:text-white"
+                        }`}
                         aria-label="Add to cart"
                     >
-                        <FiShoppingCart size={20} />
+                        {isAdded ? <FiCheck size={20} /> : <FiShoppingCart size={20} />}
                     </button>
                 </div>
             </div>

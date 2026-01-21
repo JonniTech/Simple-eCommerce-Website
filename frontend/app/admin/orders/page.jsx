@@ -68,30 +68,32 @@ export default function AdminOrders() {
                                 className="p-6 flex items-center justify-between cursor-pointer hover:bg-gray-50 dark:hover:bg-white/5 transition-colors"
                                 onClick={() => toggleExpand(order._id)}
                             >
-                                <div className="flex items-center gap-6 flex-1">
-                                    <div className="flex-shrink-0">
-                                        <p className="text-xs text-gray-500 uppercase font-bold mb-1">Order ID</p>
-                                        <p className="font-mono text-sm opacity-70">{order._id.substring(0, 8)}...</p>
-                                    </div>
+                                <div className="flex-1 overflow-x-auto">
+                                    <div className="flex items-center gap-6 min-w-max pr-4">
+                                        <div className="flex-shrink-0 w-24">
+                                            <p className="text-xs text-gray-500 uppercase font-bold mb-1">Order ID</p>
+                                            <p className="font-mono text-sm opacity-70">{order._id.substring(0, 8)}...</p>
+                                        </div>
 
-                                    <div className="flex-shrink-0">
-                                        <p className="text-xs text-gray-500 uppercase font-bold mb-1">Customer</p>
-                                        <p className="font-medium">{order.user?.name || "Guest"}</p>
-                                    </div>
+                                        <div className="flex-shrink-0 w-40">
+                                            <p className="text-xs text-gray-500 uppercase font-bold mb-1">Customer</p>
+                                            <p className="font-medium truncate">{order.user?.name || "Guest"}</p>
+                                        </div>
 
-                                    <div className="flex-shrink-0">
-                                        <p className="text-xs text-gray-500 uppercase font-bold mb-1">Total</p>
-                                        <p className="font-bold text-primary">${order.totalPrice?.toFixed(2)}</p>
-                                    </div>
+                                        <div className="flex-shrink-0 w-24">
+                                            <p className="text-xs text-gray-500 uppercase font-bold mb-1">Total</p>
+                                            <p className="font-bold text-primary">${order.totalPrice?.toFixed(2)}</p>
+                                        </div>
 
-                                    <div className="flex-shrink-0">
-                                        <p className="text-xs text-gray-500 uppercase font-bold mb-1">Status</p>
-                                        {getStatusBadge(order)}
-                                    </div>
+                                        <div className="flex-shrink-0 w-32">
+                                            <p className="text-xs text-gray-500 uppercase font-bold mb-1">Status</p>
+                                            {getStatusBadge(order)}
+                                        </div>
 
-                                    <div className="flex-shrink-0">
-                                        <p className="text-xs text-gray-500 uppercase font-bold mb-1">Date</p>
-                                        <p className="text-sm opacity-60">{new Date(order.createdAt).toLocaleDateString()}</p>
+                                        <div className="flex-shrink-0 w-32">
+                                            <p className="text-xs text-gray-500 uppercase font-bold mb-1">Date</p>
+                                            <p className="text-sm opacity-60">{new Date(order.createdAt).toLocaleDateString()}</p>
+                                        </div>
                                     </div>
                                 </div>
 

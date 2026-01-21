@@ -45,8 +45,8 @@ export default function NewProduct() {
     return (
         <AdminLayout>
             <div className="max-w-3xl">
-                <div className="flex items-center justify-between mb-8">
-                    <h1 className="text-3xl font-bold text-dark dark:text-white">Add New Product</h1>
+                <div className="flex items-center justify-between mb-6 md:mb-8">
+                    <h1 className="text-2xl md:text-3xl font-bold text-dark dark:text-white">Add New Product</h1>
                     <Link href="/admin/products" className="text-gray-500 hover:text-dark dark:hover:text-white">
                         <FiX size={24} />
                     </Link>
@@ -58,8 +58,8 @@ export default function NewProduct() {
                     </div>
                 )}
 
-                <form onSubmit={handleSubmit} className="bg-white dark:bg-[#362F5C] p-8 rounded-3xl shadow-sm border border-transparent dark:border-white/5">
-                    <div className="space-y-6">
+                <form onSubmit={handleSubmit} className="bg-white dark:bg-[#362F5C] p-5 md:p-8 rounded-2xl md:rounded-3xl shadow-sm border border-transparent dark:border-white/5">
+                    <div className="space-y-5 md:space-y-6">
                         {/* Product Name */}
                         <div>
                             <label className="block text-sm font-bold mb-2 text-dark dark:text-white">Product Name *</label>
@@ -89,7 +89,7 @@ export default function NewProduct() {
                         </div>
 
                         {/* Price and Stock */}
-                        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-5 md:gap-6">
                             <div>
                                 <label className="block text-sm font-bold mb-2 text-dark dark:text-white">Price ($) *</label>
                                 <input
@@ -148,24 +148,24 @@ export default function NewProduct() {
                                 />
                             </div>
                             {formData.image && (
-                                <div className="mt-4 relative w-full h-48 bg-gray-100 dark:bg-black/20 rounded-xl overflow-hidden">
+                                <div className="mt-4 relative w-full h-40 md:h-48 bg-gray-100 dark:bg-black/20 rounded-xl overflow-hidden">
                                     <img src={formData.image} alt="Preview" className="w-full h-full object-cover" onError={(e) => e.target.style.display = 'none'} />
                                 </div>
                             )}
                         </div>
 
                         {/* Submit Buttons */}
-                        <div className="flex gap-4 pt-4">
+                        <div className="flex flex-col md:flex-row gap-3 md:gap-4 pt-4">
                             <button
                                 type="submit"
                                 disabled={loading}
-                                className="btn-primary flex-1 py-3 text-lg font-bold"
+                                className="btn-primary flex-1 py-3 text-lg font-bold order-1 md:order-1"
                             >
                                 {loading ? "Creating..." : <><FiSave className="mr-2" /> Create Product</>}
                             </button>
                             <Link
                                 href="/admin/products"
-                                className="px-8 py-3 rounded-xl border-2 border-gray-200 dark:border-white/10 hover:bg-gray-50 dark:hover:bg-white/5 transition-all font-bold text-center"
+                                className="px-8 py-3 rounded-xl border-2 border-gray-200 dark:border-white/10 hover:bg-gray-50 dark:hover:bg-white/5 transition-all font-bold text-center order-2 md:order-2"
                             >
                                 Cancel
                             </Link>

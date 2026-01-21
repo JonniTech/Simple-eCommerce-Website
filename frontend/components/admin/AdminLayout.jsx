@@ -17,12 +17,18 @@ export default function AdminLayout({ children }) {
         if (!loading && !isRedirecting) {
             if (!user) {
                 // No user logged in - redirect to login
-                setIsRedirecting(true);
-                router.push("/login");
+                const timer = setTimeout(() => {
+                    setIsRedirecting(true);
+                    router.push("/login");
+                }, 0);
+                return () => clearTimeout(timer);
             } else if (!user.isAdmin) {
                 // User logged in but not admin - redirect to 404
-                setIsRedirecting(true);
-                router.push("/404");
+                const timer = setTimeout(() => {
+                    setIsRedirecting(true);
+                    router.push("/404");
+                }, 0);
+                return () => clearTimeout(timer);
             }
         }
     }, [user, loading, router, isRedirecting]);
@@ -114,7 +120,7 @@ export default function AdminLayout({ children }) {
             )}
 
             {/* Main Content */}
-            <main className="flex-1 md:ml-64 p-6 md:p-10 overflow-x-hidden">
+            <main className="flex-1 md:ml-64 p-4 md:p-10 overflow-x-hidden">
                 <div className="max-w-6xl mx-auto animate-in fade-in duration-500">
                     {children}
                 </div>

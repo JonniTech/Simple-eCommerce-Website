@@ -14,8 +14,16 @@ export default function Navbar() {
     const [isScrolled, setIsScrolled] = useState(false);
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
+    // Handle initial mount to avoid hydration mismatch
     useEffect(() => {
-        setMounted(true);
+        const timer = setTimeout(() => {
+            setMounted(true);
+        }, 0);
+        return () => clearTimeout(timer);
+    }, []);
+
+    // Handle scroll listener separately
+    useEffect(() => {
         const handleScroll = () => {
             setIsScrolled(window.scrollY > 20);
         };
@@ -27,15 +35,15 @@ export default function Navbar() {
 
     return (
         <nav
-            className={`fixed w-full z-50 transition-all duration-300 ${isScrolled
-                ? "bg-white/80 dark:bg-[#2D274B]/90 backdrop-blur-md shadow-md py-3"
-                : "bg-transparent py-5"
+            className={`fixed w-full z-50 transition-all duration-300 border-b border-gray-300 dark:border-gray-700 ${isScrolled
+                ? "bg-white/80 dark:bg-[#2D274B]/90 backdrop-blur-md shadow-md py-2 md:py-3"
+                : "bg-white/50 dark:bg-[#2D274B]/50 backdrop-blur-sm py-4 md:py-5"
                 }`}
         >
-            <div className="max-w-7xl mx-auto px-6 flex items-center justify-between">
+            <div className="max-w-7xl mx-auto px-4 md:px-6 flex items-center justify-between">
 
                 {/* Logo */}
-                <Link href="/" className="font-bold text-3xl flex items-center gap-2 group">
+                <Link href="/" className="font-bold text-2xl md:text-3xl flex items-center gap-2 group">
                     <span className="text-primary group-hover:scale-110 transition-transform animate-pulse-slow">Ghost</span>
                     <span className="text-dark dark:text-white">Shop</span>
                 </Link>
@@ -81,29 +89,40 @@ export default function Navbar() {
                                 <span>Login</span>
                             </Link>
                         )}
-
-                        <button
-                            onClick={() => setTheme(resolvedTheme === "dark" ? "light" : "dark")}
-                            className="p-2 rounded-full hover:bg-gray-100 dark:hover:bg-white/10 transition-colors text-dark dark:text-white"
-                            title={`Switch to ${resolvedTheme === "dark" ? "light" : "dark"} mode`}
-                        >
-                            {resolvedTheme === "dark" ? <FiSun className="w-5 h-5" /> : <FiMoon className="w-5 h-5" />}
-                        </button>
                     </div>
                 </div>
 
-                {/* Mobile Menu Button */}
-                <button
-                    className="md:hidden p-2 text-dark dark:text-white"
-                    onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-                >
-                    {isMobileMenuOpen ? <FiX className="w-6 h-6" /> : <FiMenu className="w-6 h-6" />}
-                </button>
+                {/* Mobile Actions & Menu Toggle */}
+                <div className="flex items-center gap-4">
+                    <Link href="/cart" className="md:hidden flex items-center gap-2 relative hover:text-primary transition-colors text-dark dark:text-white">
+                        <FiShoppingCart className="w-6 h-6" />
+                        {cartCount > 0 && (
+                            <span className="absolute -top-2 -right-3 bg-primary text-white text-[10px] font-bold rounded-full w-5 h-5 flex items-center justify-center shadow-sm">
+                                {cartCount}
+                            </span>
+                        )}
+                    </Link>
+
+                    <button
+                        onClick={() => setTheme(resolvedTheme === "dark" ? "light" : "dark")}
+                        className="p-2 rounded-full hover:bg-gray-100 dark:hover:bg-white/10 transition-colors text-dark dark:text-white"
+                        title={`Switch to ${resolvedTheme === "dark" ? "light" : "dark"} mode`}
+                    >
+                        {resolvedTheme === "dark" ? <FiSun className="w-5 h-5 md:w-6 md:h-6" /> : <FiMoon className="w-5 h-5 md:w-6 md:h-6" />}
+                    </button>
+
+                    <button
+                        className="md:hidden p-2 text-dark dark:text-white"
+                        onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+                    >
+                        {isMobileMenuOpen ? <FiX className="w-6 h-6" /> : <FiMenu className="w-6 h-6" />}
+                    </button>
+                </div>
             </div>
 
             {/* Mobile Menu Overlay */}
             {isMobileMenuOpen && (
-                <div className="md:hidden absolute top-full left-0 w-full bg-white dark:bg-[#2D274B] shadow-lg py-6 px-6 flex flex-col gap-4 border-t border-gray-100 dark:border-gray-700 animate-in slide-in-from-top-2">
+                <div className="md:hidden absolute top-full left-0 w-full bg-white dark:bg-[#2D274B] shadow-lg py-6 px-6 flex flex-col gap-4 border-t border-gray-300 dark:border-gray-700 animate-in slide-in-from-top-2">
                     <Link href="/" className="text-lg font-medium text-dark dark:text-white hover:text-primary" onClick={() => setIsMobileMenuOpen(false)}>
                         Home
                     </Link>

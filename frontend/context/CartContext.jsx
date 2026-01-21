@@ -26,8 +26,8 @@ export function CartProvider({ children }) {
         if (!mounted) return;
         localStorage.setItem("cart", JSON.stringify(cart));
 
-        const count = cart.reduce((acc, item) => acc + item.quantity, 0);
-        const total = cart.reduce((acc, item) => acc + (item.price * item.quantity), 0);
+        const count = cart.reduce((acc, item) => acc + (Number(item.quantity) || 0), 0);
+        const total = cart.reduce((acc, item) => acc + ((Number(item.price) || 0) * (Number(item.quantity) || 0)), 0);
 
         setCartCount(count);
         setTotalPrice(total);

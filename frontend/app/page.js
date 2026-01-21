@@ -32,13 +32,13 @@ export default function HomePage() {
   };
 
   return (
-    <div className="pt-24 pb-12 px-6 max-w-7xl mx-auto">
+    <div className="pt-24 md:pt-36 pb-12 px-4 md:px-6 max-w-7xl mx-auto">
       {/* Hero Section */}
-      <div className="mb-16 text-center animate-in slide-in-from-bottom-4 duration-700">
-        <h1 className="text-4xl md:text-6xl font-extrabold text-dark dark:text-white mb-6 tracking-tight">
+      <div className="mb-12 md:mb-16 text-center animate-in slide-in-from-bottom-4 duration-700">
+        <h1 className="text-3xl md:text-6xl font-extrabold text-dark dark:text-white mb-4 md:mb-6 tracking-tight">
           Our <span className="text-primary animate-pulse-slow">Products</span>
         </h1>
-        <p className="text-xl text-gray-600 dark:text-gray-300 max-w-2xl mx-auto leading-relaxed">
+        <p className="text-lg md:text-xl text-gray-600 dark:text-gray-300 max-w-2xl mx-auto leading-relaxed">
           Premium gadgets curated for the modern lifestyle.
         </p>
       </div>

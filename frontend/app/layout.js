@@ -4,6 +4,7 @@ import { AuthProvider } from "@/context/AuthContext";
 import { CartProvider } from "@/context/CartContext";
 import { ThemeProvider } from "@/components/ThemeProvider";
 import Navbar from "@/components/Navbar";
+import Footer from "@/components/Footer";
 
 // Setup Outfit font for that modern tech look
 const outfit = Outfit({
@@ -29,6 +30,7 @@ export default function RootLayout({ children }) {
                 <main className="flex-grow">
                   {children}
                 </main>
+                <Footer />
               </div>
             </CartProvider>
           </AuthProvider>

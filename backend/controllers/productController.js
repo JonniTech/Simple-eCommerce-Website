@@ -14,7 +14,6 @@ export const getProducts = asyncHandler(async (req, res) => {
 // @access Public
 import { isValidObjectId } from "mongoose";
 
-// ... (existing imports)
 
 export const getProductById = asyncHandler(async (req, res) => {
   if (!isValidObjectId(req.params.id)) {

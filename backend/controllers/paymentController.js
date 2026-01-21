@@ -6,6 +6,7 @@ import Stripe from "stripe";
 // @access Private
 export const createPaymentIntent = asyncHandler(async (req, res) => {
   if (!process.env.STRIPE_SECRET_KEY) {
+    console.error("Stripe Secret Key is missing in backend .env");
     res.status(500);
     throw new Error("Stripe Secret Key is missing in backend .env");
   }
@@ -13,7 +14,9 @@ export const createPaymentIntent = asyncHandler(async (req, res) => {
   const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
   const { totalPrice } = req.body;
 
-  if (!totalPrice || totalPrice <= 0) {
+  // Validate totalPrice
+  if (totalPrice === undefined || totalPrice === null || isNaN(totalPrice) || totalPrice <= 0) {
+    console.error("Invalid total price:", totalPrice);
     res.status(400);
     throw new Error("Please add a valid total price");
   }
